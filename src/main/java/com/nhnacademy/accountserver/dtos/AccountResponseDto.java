@@ -17,4 +17,5 @@ public class AccountResponseDto {
         this.password = password;
 
     }
+
 }
