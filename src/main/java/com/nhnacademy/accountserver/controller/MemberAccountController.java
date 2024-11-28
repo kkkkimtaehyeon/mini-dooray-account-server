@@ -20,14 +20,14 @@ public class MemberAccountController {
         return memberService.createMember(memberSaveRequestDto);
     }
 
-    @PutMapping("/members/{memberId}/quit")
-    public MemberResponseDto changeQuit(@PathVariable Long memberId) {
-        return memberService.updateMemberStatus(memberId, MemberStatus.WITHDRAW);
-    }
-
-    @PutMapping("/members/{memberId}/sleep")
-    public MemberResponseDto changeSleep(@PathVariable Long memberId) {
-        return memberService.updateMemberStatus(memberId, MemberStatus.SLEEPER);
+    @PutMapping("/members/{memberId}/{status}")
+    public MemberResponseDto changeJoin(@PathVariable("memberId") Long memberId,
+                                        @PathVariable("status") String status) {
+        return switch (status) {
+            case "quit" -> memberService.updateMemberStatus(memberId, MemberStatus.QUIT);
+            case "sleep" -> memberService.updateMemberStatus(memberId, MemberStatus.SLEEPER);
+            default -> memberService.updateMemberStatus(memberId, MemberStatus.ACTIVE);
+        };
     }
 
     @PutMapping("/members/{memberId}")

@@ -20,6 +20,6 @@ public class MemberSaveRequestDto {
     private String email;
 
     public Member toEntity() {
-        return new Member(this.email, MemberStatus.JOIN);
+        return new Member(this.email, MemberStatus.ACTIVE);
     }
 }
