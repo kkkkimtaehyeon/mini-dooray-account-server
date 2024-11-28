@@ -1,0 +1,9 @@
+### 회원 등록
+POST localhost:8080/members
+Content-Type: application/json
+
+{
+  "id": "testId",
+  "password": "testPassword",
+  "email": "test@email.com"
+}
