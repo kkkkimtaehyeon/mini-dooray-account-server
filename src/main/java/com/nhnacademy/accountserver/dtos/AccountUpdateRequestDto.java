@@ -4,9 +4,6 @@ import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.entity.Member;
 import lombok.AllArgsConstructor;
 
-//public record AccountUpdateRequestDto (Long accountId, String id, String password, Member member) {
-//
-//}
 
 @AllArgsConstructor
 public class AccountUpdateRequestDto {

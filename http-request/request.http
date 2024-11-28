@@ -9,16 +9,23 @@ Content-Type: application/json
 }
 
 ### 회원 탈퇴 전환
-PUT localhost:8080/members/4/quit
+@memberId = 1
+PUT localhost:8080/members/{{memberId}}/quit
+
+### 회원 휴면 전환
+PUT localhost:8080/members/{{memberId}}/sleep
+
+### 회원 활동 전환
+PUT localhost:8080/members/{{memberId}}/active
 
 
 ### 회원 이메일, 비밀번호 수정
-PUT localhost:8080/members/1
+PUT localhost:8080/members/{{memberId}}
 Content-Type: application/json
 
 {
-  "email": "update22@email.com",
-  "password": "sdfdsfsdf"
+  "email": "update11@email.com",
+  "password": "testPassword"
 }
 
 ###

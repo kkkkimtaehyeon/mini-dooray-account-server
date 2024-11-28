@@ -35,6 +35,11 @@ public class MemberService {
     }
 
 
+    public MemberResponseDto getMember(Long memberId) {
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
+        return new MemberResponseDto(foundMember);
+    }
+
     @Transactional
     public MemberResponseDto updateMemberStatus(Long memberId, MemberStatus memberStatus) {
         Member foundMember = (memberRepository.findById(memberId)).orElseThrow(() -> new MemberNotFoundException());

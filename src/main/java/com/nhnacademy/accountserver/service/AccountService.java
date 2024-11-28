@@ -1,5 +1,6 @@
 package com.nhnacademy.accountserver.service;
 
+import com.nhnacademy.accountserver.dtos.AccountLoginRequest;
 import com.nhnacademy.accountserver.dtos.AccountResponseDto;
 import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
 
@@ -37,5 +38,17 @@ public class AccountService {
     public void updatePassword(AccountUpdateRequestDto updateRequestDto, String password) {
         accountRepository.save(updateRequestDto.toEntity());
     }
+
+    public AccountResponseDto login(AccountLoginRequest loginRequest) {
+
+        AccountResponseDto accountResponseDto =  accountRepository.findById((loginRequest.getId()));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), accountResponseDto.getPassword())) {
+            throw new RuntimeException("Incorerect Password");
+        }
+
+        return accountResponseDto;
+    }
+
 
 }
