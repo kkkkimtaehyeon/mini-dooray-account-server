@@ -2,6 +2,7 @@ package com.nhnacademy.accountserver.controller;
 
 import com.nhnacademy.accountserver.dtos.MemberResponseDto;
 import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
+import com.nhnacademy.accountserver.dtos.MemberUpdateRequestDto;
 import com.nhnacademy.accountserver.enums.MemberStatus;
 import com.nhnacademy.accountserver.service.MemberService;
 import jakarta.validation.Valid;
@@ -27,5 +28,11 @@ public class MemberAccountController {
     @PutMapping("/members/{memberId}/sleep")
     public MemberResponseDto changeSleep(@PathVariable Long memberId) {
         return memberService.updateMemberStatus(memberId, MemberStatus.SLEEPER);
+    }
+
+    @PutMapping("/members/{memberId}")
+    public MemberResponseDto updateMember(@PathVariable("memberId") Long memberId,
+                                          @Valid @RequestBody MemberUpdateRequestDto requestDto) {
+        return memberService.updateMember(memberId, requestDto);
     }
 }

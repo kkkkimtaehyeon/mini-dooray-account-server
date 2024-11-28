@@ -3,9 +3,12 @@ package com.nhnacademy.accountserver.service;
 import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
 import com.nhnacademy.accountserver.dtos.MemberResponseDto;
 import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
+import com.nhnacademy.accountserver.dtos.MemberUpdateRequestDto;
+import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.entity.Member;
 import com.nhnacademy.accountserver.enums.MemberStatus;
 import com.nhnacademy.accountserver.exception.MemberAlreadyExistException;
+import com.nhnacademy.accountserver.exception.MemberNotFoundException;
 import com.nhnacademy.accountserver.respository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AccountService accountService;
+
 
     @Transactional
     public MemberResponseDto createMember(MemberSaveRequestDto memberSaveRequestDto) {
@@ -30,19 +34,30 @@ public class MemberService {
         AccountSaveRequestDto accountSaveRequestDto = new AccountSaveRequestDto(memberSaveRequestDto);
         accountService.createAccount(accountSaveRequestDto, savedMember);
 
-        return new MemberResponseDto(savedMember.getMemberId(), savedMember.getEmail(), savedMember.getMemberStatus());
+        return new MemberResponseDto(savedMember);
     }
 
 
     @Transactional
     public MemberResponseDto updateMemberStatus(Long memberId, MemberStatus memberStatus) {
-        Member findMember = (memberRepository.findById(memberId)).get();
+        Member foundMember = (memberRepository.findById(memberId)).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
 
 //        changeStatus
-        findMember.changeStatus(memberStatus);
-        memberRepository.save(findMember);
+        foundMember.changeStatus(memberStatus);
+        memberRepository.save(foundMember);
 
-        return new MemberResponseDto(memberId, findMember.getEmail(), findMember.getMemberStatus());
+        return new MemberResponseDto(foundMember);
+    }
+
+    public MemberResponseDto updateMember(long memberId, MemberUpdateRequestDto updateRequestDto) {
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
+
+        Member updatedMember = memberRepository.save(new Member(memberId, updateRequestDto.getEmail(), foundMember.getMemberStatus()));
+        Account foundAccount = accountService.getAccount(memberId);
+        accountService.updatePassword(foundAccount, foundAccount.getPassword());
+
+        return new MemberResponseDto(updatedMember);
+
     }
 
 
