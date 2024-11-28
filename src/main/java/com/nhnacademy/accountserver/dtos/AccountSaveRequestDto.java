@@ -3,10 +3,12 @@ package com.nhnacademy.accountserver.dtos;
 import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class AccountSaveRequestDto {
     private String id;
+    @Setter
     private String password;
 
     public AccountSaveRequestDto(MemberSaveRequestDto requestDto) {
