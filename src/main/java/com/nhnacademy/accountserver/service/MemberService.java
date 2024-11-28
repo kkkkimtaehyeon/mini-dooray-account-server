@@ -4,6 +4,7 @@ import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
 import com.nhnacademy.accountserver.dtos.MemberResponseDto;
 import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
 import com.nhnacademy.accountserver.entity.Member;
+import com.nhnacademy.accountserver.exception.MemberAlreadyExistException;
 import com.nhnacademy.accountserver.respository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,16 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDto createMember(MemberSaveRequestDto memberSaveRequestDto) {
+        // 중복된 회원(이메일) 검증
+        String email = memberSaveRequestDto.getEmail();
+        if (memberRepository.existsByEmail(email)) {
+            throw new MemberAlreadyExistException(email);
+        }
+        // 회원 -> 계정 순으로 DB에 저장
         Member savedMember = memberRepository.save(memberSaveRequestDto.toEntity());
         AccountSaveRequestDto accountSaveRequestDto = new AccountSaveRequestDto(memberSaveRequestDto);
         accountService.createAccount(accountSaveRequestDto, savedMember);
 
         return new MemberResponseDto(savedMember.getMemberId(), savedMember.getEmail(), savedMember.getMemberStatus());
     }
-
-
-
 }
