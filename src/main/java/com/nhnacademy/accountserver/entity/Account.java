@@ -1,9 +1,6 @@
 package com.nhnacademy.accountserver.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -11,8 +8,16 @@ import lombok.NoArgsConstructor;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String accountId;
-    private String accountPassword;
+    private Long accountId;
+    private String id;
+    private String password;
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
+    public Account(String id, String password, Member member) {
+        this.id = id;
+        this.password = password;
+        this.member = member;
+    }
 }
