@@ -21,7 +21,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AccountService accountService;
 
-
     @Transactional
     public MemberResponseDto createMember(MemberSaveRequestDto memberSaveRequestDto) {
         // 중복된 회원(이메일) 검증
@@ -37,10 +36,15 @@ public class MemberService {
         return new MemberResponseDto(savedMember);
     }
 
+    public MemberResponseDto getMember(Long memberId) {
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
+        return new MemberResponseDto(foundMember);
+    }
+
 
     @Transactional
     public MemberResponseDto updateMemberStatus(Long memberId, MemberStatus memberStatus) {
-        Member foundMember = (memberRepository.findById(memberId)).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
+        Member foundMember = (memberRepository.findById(memberId)).orElseThrow(MemberNotFoundException::new);
 
 //        changeStatus
         foundMember.changeStatus(memberStatus);
@@ -49,16 +53,17 @@ public class MemberService {
         return new MemberResponseDto(foundMember);
     }
 
+    @Transactional
     public MemberResponseDto updateMember(long memberId, MemberUpdateRequestDto updateRequestDto) {
-        Member foundMember = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
 
         Member updatedMember = memberRepository.save(new Member(memberId, updateRequestDto.getEmail(), foundMember.getMemberStatus()));
         Account foundAccount = accountService.getAccount(memberId);
         accountService.updatePassword(foundAccount, foundAccount.getPassword());
 
         return new MemberResponseDto(updatedMember);
-
     }
+
 
 
 }

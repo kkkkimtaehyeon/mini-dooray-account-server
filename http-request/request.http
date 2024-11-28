@@ -8,17 +8,21 @@ Content-Type: application/json
   "email": "test@email.com"
 }
 
+### 회원 단건 조회
+@memberId = 1
+GET localhost:8080/members/{{memberId}}
+
 ### 회원 탈퇴 전환
-PUT localhost:8080/members/1/quit
+PUT localhost:8080/members/{{memberId}}/quit
 
 ### 회원 휴면상태 전환
-PUT localhost:8080/members/1/sleep
+PUT localhost:8080/members/{{memberId}}/sleep
 
 ### 회원 활동상태 전환
-PUT localhost:8080/members/1/active
+PUT localhost:8080/members/{{memberId}}/active
 
 ### 회원 이메일, 비밀번호 수정
-PUT localhost:8080/members/1
+PUT localhost:8080/members/{{memberId}}
 Content-Type: application/json
 
 {

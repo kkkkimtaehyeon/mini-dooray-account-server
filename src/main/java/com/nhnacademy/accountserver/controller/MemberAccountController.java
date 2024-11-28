@@ -20,6 +20,11 @@ public class MemberAccountController {
         return memberService.createMember(memberSaveRequestDto);
     }
 
+    @GetMapping("/members/{memberId}")
+    public MemberResponseDto getMember(@PathVariable("memberId") Long memberId) {
+        return memberService.getMember(memberId);
+    }
+
     @PutMapping("/members/{memberId}/{status}")
     public MemberResponseDto changeJoin(@PathVariable("memberId") Long memberId,
                                         @PathVariable("status") String status) {
