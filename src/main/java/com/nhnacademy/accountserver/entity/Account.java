@@ -12,7 +12,7 @@ public class Account {
     private Long accountId;
     private String id;
     private String password;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
