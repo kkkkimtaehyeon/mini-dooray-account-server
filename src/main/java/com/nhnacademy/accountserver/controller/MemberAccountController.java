@@ -1,19 +1,21 @@
 package com.nhnacademy.accountserver.controller;
 
-import com.nhnacademy.accountserver.dtos.MemberResponseDto;
-import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
-import com.nhnacademy.accountserver.dtos.MemberUpdateRequestDto;
+import com.nhnacademy.accountserver.dtos.*;
+import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.enums.MemberStatus;
+import com.nhnacademy.accountserver.service.AccountService;
 import com.nhnacademy.accountserver.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
 @RestController
 public class MemberAccountController {
 
     private final MemberService memberService;
+    private final AccountService accountService;
 
     @PostMapping("/members")
     public MemberResponseDto createMember(@Valid @RequestBody MemberSaveRequestDto memberSaveRequestDto) {
@@ -34,5 +36,13 @@ public class MemberAccountController {
     public MemberResponseDto updateMember(@PathVariable("memberId") Long memberId,
                                           @Valid @RequestBody MemberUpdateRequestDto requestDto) {
         return memberService.updateMember(memberId, requestDto);
+    }
+
+    @PostMapping("/login/process")
+    public AccountResponseDto processLogin(@RequestBody AccountLoginRequest loginRequest)  {
+
+        //  로직
+
+        return accountService.login(loginRequest);
     }
 }

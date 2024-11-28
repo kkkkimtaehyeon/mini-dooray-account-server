@@ -3,13 +3,13 @@ POST localhost:8080/members
 Content-Type: application/json
 
 {
-  "id": "testId",
+  "id": "testId5",
   "password": "testPassword",
-  "email": "test@email.com"
+  "email": "test@email.com123"
 }
 
 ### 회원 탈퇴 전환
-PUT localhost:8080/members/1/quit
+PUT localhost:8080/members/4/quit
 
 ### 회원 휴면상태 전환
 PUT localhost:8080/members/1/sleep
@@ -24,4 +24,13 @@ Content-Type: application/json
 {
   "email": "update22@email.com",
   "password": "sdfdsfsdf"
+}
+
+###
+POST localhost:8080/login/process
+Content-Type: application/json
+
+{
+  "id": "testId5",
+  "password": "testPassword"
 }

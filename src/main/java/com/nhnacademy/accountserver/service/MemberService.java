@@ -1,9 +1,6 @@
 package com.nhnacademy.accountserver.service;
 
-import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
-import com.nhnacademy.accountserver.dtos.MemberResponseDto;
-import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
-import com.nhnacademy.accountserver.dtos.MemberUpdateRequestDto;
+import com.nhnacademy.accountserver.dtos.*;
 import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.entity.Member;
 import com.nhnacademy.accountserver.enums.MemberStatus;
@@ -59,6 +56,5 @@ public class MemberService {
         return new MemberResponseDto(updatedMember);
 
     }
-
 
 }
