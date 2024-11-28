@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MemberStatus {
-    JOIN, SLEEPER, WITHDRAW;
+    ACTIVE, SLEEPER, QUIT;
 
     @JsonCreator
     public static MemberStatus fromString(String str){

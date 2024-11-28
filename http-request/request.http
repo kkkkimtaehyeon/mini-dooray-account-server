@@ -3,19 +3,14 @@ POST localhost:8080/members
 Content-Type: application/json
 
 {
-  "id": "testId",
+  "id": "testId5",
   "password": "testPassword",
-  "email": "test@email.com"
+  "email": "test@email.com123"
 }
 
 ### 회원 탈퇴 전환
-PUT localhost:8080/members/1/quit
-Content-Type: application/json
+PUT localhost:8080/members/4/quit
 
-
-### 회원 휴면상태 전환
-PUT localhost:8080/members/1/sleep
-Content-Type: application/json
 
 ### 회원 이메일, 비밀번호 수정
 PUT localhost:8080/members/1
@@ -26,5 +21,11 @@ Content-Type: application/json
   "password": "sdfdsfsdf"
 }
 
-$2a$10$Sz4M0PXkFl8EtGbqWNsXceF01tEjCkKWShy/t8VyoPKpNLd6cmpse
-$2a$10$I4ZG/bZUByYu2aTVql/3LekOHGybu5z7Lb1bG6hxzRFH1ftonRv7m
+###
+POST localhost:8080/login/process
+Content-Type: application/json
+
+{
+  "id": "testId5",
+  "password": "testPassword"
+}
