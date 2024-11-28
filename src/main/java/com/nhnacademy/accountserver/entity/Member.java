@@ -25,6 +25,12 @@ public class Member {
         this.memberStatus = memberStatus;
     }
 
+    public Member(Long memberId, String email, MemberStatus memberStatus) {
+        this.memberId = memberId;
+        this.email = email;
+        this.memberStatus = memberStatus;
+    }
+
     public void changeStatus(MemberStatus memberStatus) {
         this.memberStatus = memberStatus;
     }
