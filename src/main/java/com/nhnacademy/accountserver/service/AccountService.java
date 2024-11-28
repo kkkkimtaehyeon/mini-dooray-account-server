@@ -1,6 +1,8 @@
 package com.nhnacademy.accountserver.service;
 
+import com.nhnacademy.accountserver.dtos.AccountResponseDto;
 import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
+import com.nhnacademy.accountserver.dtos.AccountLoginRequest;
 import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.entity.Member;
 import com.nhnacademy.accountserver.exception.MemberAccountNotFoundException;
@@ -25,12 +27,25 @@ public class AccountService {
         requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         accountRepository.save(requestDto.toEntity(member));
     }
+
     public Account getAccount(long memberId) {
         return accountRepository.findByMember_MemberId(memberId).orElseThrow(MemberAccountNotFoundException::new);
     }
+
     //반환 dto로 바꿔야됨
     public Account updatePassword(Account account, String password) {
         return accountRepository.save(new Account(account.getAccountId(), account.getId(), passwordEncoder.encode(password), account.getMember()));
+    }
+
+    public AccountResponseDto login(AccountLoginRequest loginRequest) {
+
+        AccountResponseDto accountResponseDto =  accountRepository.findById((loginRequest.getId()));
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), accountResponseDto.getPassword())) {
+            throw new RuntimeException("Incorerect Password");
+        }
+
+        return accountResponseDto;
     }
 
 }
