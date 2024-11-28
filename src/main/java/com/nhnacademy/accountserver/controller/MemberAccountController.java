@@ -2,6 +2,7 @@ package com.nhnacademy.accountserver.controller;
 
 import com.nhnacademy.accountserver.dtos.MemberResponseDto;
 import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
+import com.nhnacademy.accountserver.enums.MemberStatus;
 import com.nhnacademy.accountserver.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,13 @@ public class MemberAccountController {
         return memberService.createMember(memberSaveRequestDto);
     }
 
-    @GetMapping("/members/{memberId}/quit")
+    @PutMapping("/members/{memberId}/quit")
     public MemberResponseDto changeQuit(@PathVariable Long memberId) {
-        return memberService.updateMember(memberId);
+        return memberService.updateMemberStatus(memberId, MemberStatus.WITHDRAW);
+    }
+
+    @PutMapping("/members/{memberId}/sleep")
+    public MemberResponseDto changeSleep(@PathVariable Long memberId) {
+        return memberService.updateMemberStatus(memberId, MemberStatus.SLEEPER);
     }
 }

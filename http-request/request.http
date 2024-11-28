@@ -9,5 +9,10 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/members/1/quit
+PUT localhost:8080/members/1/quit
+Content-Type: application/json
+
+
+###
+PUT localhost:8080/members/1/sleep
 Content-Type: application/json

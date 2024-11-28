@@ -35,13 +35,15 @@ public class MemberService {
 
 
     @Transactional
-    public MemberResponseDto updateMember(Long memberId) {
+    public MemberResponseDto updateMemberStatus(Long memberId, MemberStatus memberStatus) {
         Member findMember = (memberRepository.findById(memberId)).get();
 
 //        changeStatus
-        findMember.changeStatus(MemberStatus.WITHDRAW);
+        findMember.changeStatus(memberStatus);
         memberRepository.save(findMember);
 
         return new MemberResponseDto(memberId, findMember.getEmail(), findMember.getMemberStatus());
     }
+
+
 }
