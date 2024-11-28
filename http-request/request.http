@@ -11,11 +11,6 @@ Content-Type: application/json
 ### 회원 탈퇴 전환
 PUT localhost:8080/members/4/quit
 
-### 회원 휴면상태 전환
-PUT localhost:8080/members/1/sleep
-
-### 회원 활동상태 전환
-PUT localhost:8080/members/1/active
 
 ### 회원 이메일, 비밀번호 수정
 PUT localhost:8080/members/1
