@@ -7,3 +7,7 @@ Content-Type: application/json
   "password": "testPassword",
   "email": "test@email.com"
 }
+
+###
+GET localhost:8080/members/1/quit
+Content-Type: application/json

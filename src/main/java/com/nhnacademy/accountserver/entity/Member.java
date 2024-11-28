@@ -24,4 +24,8 @@ public class Member {
         this.email = email;
         this.memberStatus = memberStatus;
     }
+
+    public void changeStatus(MemberStatus memberStatus) {
+        this.memberStatus = memberStatus;
+    }
 }

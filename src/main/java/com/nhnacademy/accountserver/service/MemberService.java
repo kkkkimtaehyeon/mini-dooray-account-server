@@ -4,6 +4,7 @@ import com.nhnacademy.accountserver.dtos.AccountSaveRequestDto;
 import com.nhnacademy.accountserver.dtos.MemberResponseDto;
 import com.nhnacademy.accountserver.dtos.MemberSaveRequestDto;
 import com.nhnacademy.accountserver.entity.Member;
+import com.nhnacademy.accountserver.enums.MemberStatus;
 import com.nhnacademy.accountserver.exception.MemberAlreadyExistException;
 import com.nhnacademy.accountserver.respository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -30,5 +31,17 @@ public class MemberService {
         accountService.createAccount(accountSaveRequestDto, savedMember);
 
         return new MemberResponseDto(savedMember.getMemberId(), savedMember.getEmail(), savedMember.getMemberStatus());
+    }
+
+
+    @Transactional
+    public MemberResponseDto updateMember(Long memberId) {
+        Member findMember = (memberRepository.findById(memberId)).get();
+
+//        changeStatus
+        findMember.changeStatus(MemberStatus.WITHDRAW);
+        memberRepository.save(findMember);
+
+        return new MemberResponseDto(memberId, findMember.getEmail(), findMember.getMemberStatus());
     }
 }
