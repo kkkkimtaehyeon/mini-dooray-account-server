@@ -37,7 +37,7 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDto updateMemberStatus(Long memberId, MemberStatus memberStatus) {
-        Member foundMember = (memberRepository.findById(memberId)).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
+        Member foundMember = (memberRepository.findById(memberId)).orElseThrow(() -> new MemberNotFoundException());
 
 //        changeStatus
         foundMember.changeStatus(memberStatus);
@@ -47,15 +47,15 @@ public class MemberService {
     }
 
     public MemberResponseDto updateMember(long memberId, MemberUpdateRequestDto updateRequestDto) {
-        Member foundMember = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("메세지 넣으삼"));
+        Member foundMember = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException());
 
         Member updatedMember = memberRepository.save(new Member(memberId, updateRequestDto.getEmail(), foundMember.getMemberStatus()));
-        Account foundAccount = accountService.getAccount(memberId);
-        accountService.updatePassword(foundAccount, foundAccount.getPassword());
+        Account foundAccount = accountService.getAccount(memberId);  //account entity를 찾고 dto로 변경해서 넘겨주자
+
+        AccountUpdateRequestDto dto = new AccountUpdateRequestDto(foundAccount);
+
+        accountService.updatePassword(dto, foundAccount.getPassword());
 
         return new MemberResponseDto(updatedMember);
-
     }
-
-
 }
