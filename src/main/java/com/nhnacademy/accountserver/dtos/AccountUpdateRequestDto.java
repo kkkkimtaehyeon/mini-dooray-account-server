@@ -19,6 +19,10 @@ public class AccountUpdateRequestDto {
         this.member = account.getMember();
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Account toEntity() {
         return new Account(accountId, id, password, member);
     }

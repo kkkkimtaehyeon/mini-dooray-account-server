@@ -36,6 +36,7 @@ public class AccountService {
 
     //반환 dto로 바꿔야됨 found account, 회원 조회, member
     public void updatePassword(AccountUpdateRequestDto updateRequestDto, String password) {
+        updateRequestDto.setPassword(passwordEncoder.encode(password));
         accountRepository.save(updateRequestDto.toEntity());
     }
 
@@ -44,7 +45,7 @@ public class AccountService {
         AccountResponseDto accountResponseDto =  accountRepository.findById((loginRequest.getId()));
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), accountResponseDto.getPassword())) {
-            throw new RuntimeException("Incorerect Password");
+            throw new RuntimeException("Incorrect Password");
         }
 
         return accountResponseDto;
