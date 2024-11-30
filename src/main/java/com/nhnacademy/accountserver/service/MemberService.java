@@ -34,7 +34,6 @@ public class MemberService {
         return new MemberResponseDto(savedMember);
     }
 
-
     public MemberResponseDto getMember(Long memberId) {
         Member foundMember = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         return new MemberResponseDto(foundMember);

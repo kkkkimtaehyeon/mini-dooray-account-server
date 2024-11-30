@@ -3,9 +3,9 @@ POST localhost:8080/members
 Content-Type: application/json
 
 {
-  "id": "testId5",
+  "id": "testIdtest3",
   "password": "testPassword",
-  "email": "test@email.com123"
+  "email": "testtest3@email.com"
 }
 
 ### 회원 탈퇴 전환
@@ -34,5 +34,14 @@ Content-Type: application/json
 
 {
   "id": "testId5",
+  "password": "testPassword"
+}
+
+###
+POST localhost:8080/login/process
+Content-Type: application/json
+
+{
+  "id": "testIdtest3",
   "password": "testPassword"
 }

@@ -1,14 +1,14 @@
 package com.nhnacademy.accountserver.controller;
 
 import com.nhnacademy.accountserver.dtos.*;
-import com.nhnacademy.accountserver.entity.Account;
 import com.nhnacademy.accountserver.enums.MemberStatus;
 import com.nhnacademy.accountserver.service.AccountService;
 import com.nhnacademy.accountserver.service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,10 +44,15 @@ public class MemberAccountController {
     }
 
     @PostMapping("/login/process")
-    public AccountResponseDto processLogin(@RequestBody AccountLoginRequest loginRequest)  {
+    public LoginResponseDto processLogin(HttpServletResponse response, @RequestBody AccountLoginRequest loginRequest)  {
+        LoginResponseDto loginResponseDto = accountService.login(loginRequest);
 
-        //  로직
+        Cookie sessionCookie = new Cookie("LOGIN_SESSION", loginResponseDto.getSessionId());
+        sessionCookie.setHttpOnly(true);
+        sessionCookie.setMaxAge(3600);
+        sessionCookie.setPath("/");
+        response.addCookie(sessionCookie);
 
-        return accountService.login(loginRequest);
+        return loginResponseDto;
     }
 }
